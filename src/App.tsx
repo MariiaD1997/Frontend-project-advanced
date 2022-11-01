@@ -2,22 +2,19 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
-import Cart from "./Components/Cart";
-import Home from "./Components/Home";
-import ProductItem from "./Components/ProductItem";
-import Products from "./Components/Products";
-import Profile from "./Components/Profile";
+import Cart from "./Components/Pages/Cart";
+import Home from "./Components/Pages/Home";
+import ProductItem from "./Components/Pages/ProductItem";
+import Products from "./Components/Pages/Products";
+import Profile from "./Components/Pages/Profile";
+import Footer from "./Components/StaticComponents/Footer";
+import Header from "./Components/StaticComponents/Header";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <div>
-          <Link to="">Home</Link>
-          <Link to="products">Products</Link>
-          <Link to="cart">Cart</Link>
-          <Link to="profile">Profile</Link>
-        </div>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products">
@@ -28,6 +25,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
