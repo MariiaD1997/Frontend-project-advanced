@@ -9,6 +9,7 @@ import Products from "./Components/Pages/Products";
 import Profile from "./Components/Pages/Profile";
 import Footer from "./Components/StaticComponents/Footer";
 import Header from "./Components/StaticComponents/Header";
+import Users from "./Components/Pages/Users";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           </Route>
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </BrowserRouter>
       <Footer />
