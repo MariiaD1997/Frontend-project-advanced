@@ -6,6 +6,16 @@ export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
   return await allProducts.json();
 });
 
+export const fetchSingleProduct = createAsyncThunk(
+  "fetchSingleProduct",
+  async () => {
+    const singleProduct = await fetch(
+      "https://api.escuelajs.co/api/v1/products/{id}"
+    );
+    return await singleProduct.json();
+  }
+);
+
 const initialState: Product[] = [];
 const productsSlicer = createSlice({
   name: "products",
@@ -24,11 +34,14 @@ const productsSlicer = createSlice({
       console.log("I will update");
     },
     deleteProduct: (state, action: PayloadAction<Product>) => {
-     console.log('delete')
+      console.log("delete");
     },
   },
   extraReducers: (build) => {
     build.addCase(fetchProducts.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    build.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       return action.payload;
     });
   },

@@ -15,7 +15,7 @@ const Users = () => {
   return (
     <Box>
       <Grid container display="flex">
-        <ListItem>Users</ListItem>
+        <p>Users</p>
         {users.map((item) => (
           <Grid md={4}>
             <li key={item.id}>
