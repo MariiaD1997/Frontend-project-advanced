@@ -6,45 +6,34 @@ export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
   return await allProducts.json();
 });
 
-export const fetchSingleProduct = createAsyncThunk(
-  "fetchSingleProduct",
-  async () => {
-    const singleProduct = await fetch(
-      "https://api.escuelajs.co/api/v1/products/{id}"
-    );
-    return await singleProduct.json();
-  }
-);
-
 const initialState: Product[] = [];
 const productsSlicer = createSlice({
   name: "products",
   initialState,
   reducers: {
-    findProduct: (state, action) => {
-      console.log("I should find certain products");
-    },
     sortByPrice: (state, action) => {
-      console.log("I will sort by price");
-    },
-    sortByCategories: (state, action) => {
-      console.log("I will sort by categories");
+      state.sort((a, b) => (a.price > b.price ? 1 : -1));
     },
     updateProduct: (state, action) => {
       console.log("I will update");
     },
-    deleteProduct: (state, action: PayloadAction<Product>) => {
-      console.log("delete");
+    searchProduct: (state, action) => {
+      return state.filter((item) => {
+        return (
+          item.title.toLowerCase().indexOf(action.payload.toLowerCase()) > -1
+        );
+      });
+    },
+    deleteProduct: (state, action) => {
+      return state.filter((item) => item.id !== action.payload);
     },
   },
   extraReducers: (build) => {
     build.addCase(fetchProducts.fulfilled, (state, action) => {
       return action.payload;
     });
-    build.addCase(fetchSingleProduct.fulfilled, (state, action) => {
-      return action.payload;
-    });
   },
 });
 const productsReducer = productsSlicer.reducer;
+const { sortByPrice, deleteProduct, searchProduct } = productsSlicer.actions;
 export default productsReducer;

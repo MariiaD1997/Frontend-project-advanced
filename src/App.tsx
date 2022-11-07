@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import "./App.css";
 import Cart from "./Components/Pages/Cart";
@@ -38,14 +38,14 @@ function App() {
             },
           }
         : {
-            primary: { main: "#000000" },
-            secondary: { main: "#000000" },
+            primary: { main: "#1b2845" },
+            secondary: { main: "#7e7f9a" },
             text: {
-              primary: "#000000",
-              secondary: "#1b2845",
+              primary: "#e8ebe4",
+              secondary: "#a30b37",
             },
             background: {
-              default: "#000000",
+              default: "#1f2421",
             },
           }),
     },
@@ -58,7 +58,7 @@ function App() {
   };
 
   return (
-    <Box>
+    <Grid item xs={12}>
       <ThemeContext.Provider value={manageTheme}>
         <ThemeProvider theme={theme}>
           <Box
@@ -85,7 +85,7 @@ function App() {
           </Box>
         </ThemeProvider>
       </ThemeContext.Provider>
-    </Box>
+    </Grid>
   );
 }
 

@@ -4,16 +4,15 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { IconButton, useTheme } from "@mui/material";
 
-import { Box, AppBar } from "@mui/material";
-import SearchField from "./SearchField";
+import { Box, AppBar, Typography } from "@mui/material";
 import { ThemeContext } from "../../App";
 
 const Header = () => {
   const colorMode = useContext(ThemeContext);
   const theme = useTheme();
   return (
-    <Box>
-      <Box position="static">
+    <AppBar position="static">
+      <Box display="flex" justifyContent="space-around">
         <IconButton
           onClick={() => colorMode.toggleMode()}
           style={{ color: "#000000" }}
@@ -24,18 +23,23 @@ const Header = () => {
             <NightsStayIcon />
           )}
         </IconButton>
-        <Box></Box>
-        <SearchField></SearchField>
+        <Typography variant="h4">My site</Typography>
+        <Box
+          display="flex"
+          justifyContent="space-around"
+          alignItems="center"
+          padding={2}
+          gap={4}
+        >
+          <Link to="">Home</Link>
+          <Link to="products">Products</Link>
+          <Link to="cart">Cart</Link>
+          <Link to="profile">Profile</Link>
+          <Link to="users">Users</Link>
+          <Link to="useritem">User</Link>
+        </Box>
       </Box>
-      <Box>
-        <Link to="">Home</Link>
-        <Link to="products">Products</Link>
-        <Link to="cart">Cart</Link>
-        <Link to="profile">Profile</Link>
-        <Link to="users">Users</Link>
-        <Link to="useritem">User</Link>
-      </Box>
-    </Box>
+    </AppBar>
   );
 };
 
