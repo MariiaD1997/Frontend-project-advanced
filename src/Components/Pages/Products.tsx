@@ -29,6 +29,11 @@ const Products = () => {
     setFilter(filtered);
   };
 
+  const [search, setSearch] = useState("");
+  const searchProductItem = (search: string) => {
+    const searched = products.filter((item) => item.title.includes(search));
+    setFilter(searched);
+  };
   return (
     <Box>
       <Box display="flex">
@@ -52,7 +57,14 @@ const Products = () => {
           >
             <SearchIcon />
           </IconButton>
-          <TextField sx={{ marginLeft: 2 }} />
+          <TextField
+            sx={{ marginLeft: 2 }}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              searchProductItem(search);
+            }}
+          />
         </Box>
         <Box gap={4}>
           <Button
@@ -103,6 +115,7 @@ const Products = () => {
           >
             Others
           </Button>
+          <Button>Sort by price</Button>
         </Box>
       </Box>
       <ImageList sx={{ padding: 10 }} cols={4}>

@@ -2,6 +2,16 @@ import React from "react";
 import { useParams } from "react-router";
 import { useAppSelector } from "../hooks/reactHooks";
 import singleProductReducer from "../redux/reducers/singleProduct";
+import {
+  Box,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  IconButton,
+  Button,
+  TextField,
+} from "@mui/material";
+import { RootState } from "../redux/store";
 
 const ProductItem = () => {
   const params = useParams();
@@ -9,9 +19,7 @@ const ProductItem = () => {
     (state: RootState) => state.singleProductReducer
   );
 
-  return <Box>
-    
-  </Box>;
+  return <Box></Box>;
 };
 
 export default ProductItem;
