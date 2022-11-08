@@ -14,13 +14,14 @@ import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
 import { RootState } from "../redux/store";
 import { fetchProducts } from "../redux/reducers/products";
 import SearchIcon from "@mui/icons-material/Search";
-import searchProduct from "../redux/reducers/products";
+import { addItemToCart } from "../redux/reducers/cart";
+import { CartProps } from "../types/cart";
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   const [category, setCategory] = useState("All");
   const [filter, setFilter] = useState(products);
@@ -33,6 +34,15 @@ const Products = () => {
   const searchProductItem = (search: string) => {
     const searched = products.filter((item) => item.title.includes(search));
     setFilter(searched);
+  };
+
+  const addToCart = (
+    id: number,
+    title: string,
+    price: number,
+    image: string
+  ) => {
+    dispatch(addItemToCart({ id, title, price, image }));
   };
   return (
     <Box>
@@ -115,7 +125,6 @@ const Products = () => {
           >
             Others
           </Button>
-          <Button>Sort by price</Button>
         </Box>
       </Box>
       <ImageList sx={{ padding: 10 }} cols={4}>
@@ -129,6 +138,9 @@ const Products = () => {
                 <IconButton
                   sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                   aria-label={`info about ${item.title}`}
+                  onClick={() =>
+                    addToCart(item.id, item.title, item.price, item.images[0])
+                  }
                 >
                   <ShoppingCartIcon>
                     <Link to={`/products/${item.id}`}></Link>

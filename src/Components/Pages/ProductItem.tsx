@@ -10,6 +10,7 @@ import {
   IconButton,
   Button,
   TextField,
+  Typography,
 } from "@mui/material";
 import { RootState } from "../redux/store";
 
@@ -19,7 +20,22 @@ const ProductItem = () => {
     (state: RootState) => state.singleProductReducer
   );
 
-  return <Box></Box>;
+  return (
+    <Box>
+      {productSingleItem.map((item) => (
+        <Box display="flex">
+          <ImageList>
+            <ImageListItem key={item.id}>
+              <img src={`${item.images}`} alt={item.title} loading="lazy" />
+              <ImageListItemBar title={item.title} subtitle={item.price} />
+            </ImageListItem>
+          </ImageList>
+          <Typography variant="h4">{item.description}</Typography>
+          <Button>Add to cart</Button>
+        </Box>
+      ))}
+    </Box>
+  );
 };
 
 export default ProductItem;
