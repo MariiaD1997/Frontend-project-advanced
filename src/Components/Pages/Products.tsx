@@ -19,7 +19,6 @@ import { addItemToCart } from "../redux/reducers/cart";
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const lastPage = 15;
 
   const products = useAppSelector((state: RootState) => state.productsReducer);
   const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Product } from "../../types/products";
 
 export const fetchSingleProduct = createAsyncThunk(
@@ -18,7 +18,7 @@ const singleProductSlicer = createSlice({
   reducers: {},
   extraReducers: (build) => {
     build.addCase(fetchSingleProduct.fulfilled, (state, action) => {
-      return action.payload;
+      return [action.payload];
     });
   },
 });

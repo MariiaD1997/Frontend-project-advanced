@@ -25,12 +25,12 @@ const ProductItem = () => {
   );
   const dispatch = useAppDispatch();
 
-  useEffect(
-    (id: number) => {
+  useEffect(() => {
+    if (params.id != undefined) {
+      let id = Number(params.id);
       dispatch(fetchSingleProduct(id));
-    },
-    [dispatch]
-  );
+    }
+  }, []);
 
   const addToCart = (
     id: number,
@@ -48,25 +48,24 @@ const ProductItem = () => {
           <ImageList>
             <ImageListItem key={item.id}>
               <img src={`${item.images}`} alt={item.title} loading="lazy" />
-              <ImageListItemBar title={item.title} subtitle={item.price} />
+              <ImageListItemBar
+                title={item.title}
+                subtitle={item.price}
+                actionIcon={
+                  <IconButton
+                    sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                    aria-label={`buy this ${item.title}`}
+                    onClick={() =>
+                      addToCart(item.id, item.title, item.price, item.images[0])
+                    }
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                }
+              />
             </ImageListItem>
           </ImageList>
-          <Typography variant="h4">{item.description}</Typography>
-          <ImageListItemBar
-            title={item.title}
-            subtitle={item.price}
-            actionIcon={
-              <IconButton
-                sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                aria-label={`buy this ${item.title}`}
-                onClick={() =>
-                  addToCart(item.id, item.title, item.price, item.images[0])
-                }
-              >
-                <ShoppingCartIcon />
-              </IconButton>
-            }
-          />
+          <Typography variant="h5">{item.description}</Typography>
         </Box>
       ))}
     </Box>
