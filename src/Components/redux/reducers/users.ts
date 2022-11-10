@@ -1,34 +1,77 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "../../types/user";
+import { User, UserLoginCredential, UserReducer } from "../../types/user";
+import axios from "axios";
 
 export const fetchUsers = createAsyncThunk("fetchProducts", async () => {
-  const allUsers = await fetch("https://api.escuelajs.co/api/v1/users");
-  return await allUsers.json();
+  const allUsers = await axios.get("https://api.escuelajs.co/api/v1/users");
+  return allUsers.data;
 });
+/*
+export const login = createAsyncThunk(
+  "login",
+  async (data: UserLoginCredential) => {
+    try {
+      const response = await axios.post(
+        "https://api.escuelajs.co/api/v1/auth/login",
+        data
+      );
+      const token = response.data;
+      localStorage.setItem("token", token.access_token);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+*/
 
-export const fetchSingleUser = createAsyncThunk("fetchSingleUser", async () => {
-  const singleUser = await fetch("https://api.escuelajs.co/api/v1/users/{id}");
-  return await singleUser.json();
-});
+export const authenticate = createAsyncThunk(
+  "authenticate",
+  async (token: string) => {
+    try {
+      const response = await axios.get(
+        "https://api.escuelajs.co/api/v1/auth/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
-const initialState: User[] = [];
+const initialState: UserReducer = {
+  users: [],
+  currentUser: undefined,
+};
 const userSlicer = createSlice({
-  name: "user",
+  name: "userReducer",
   initialState,
   reducers: {
-    createNewUser: (state, action) => {
-      console.log("here I will create a user");
+    logout: (state) => {
+      state.currentUser = undefined;
+      localStorage.clear();
     },
   },
   extraReducers: (build) => {
-    build.addCase(fetchUsers.fulfilled, (state, action) => {
-      return action.payload;
-    });
-    build.addCase(fetchSingleUser.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    build.addCase(
+      fetchUsers.fulfilled,
+      (state, action: PayloadAction<User[]>) => {
+        state.users = action.payload;
+      }
+    );
+    build.addCase(
+      authenticate.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.currentUser = action.payload;
+      }
+    );
   },
 });
 
 const usersReducer = userSlicer.reducer;
 export default usersReducer;
+export const { logout } = userSlicer.actions;

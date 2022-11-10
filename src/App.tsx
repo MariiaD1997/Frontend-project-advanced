@@ -8,16 +8,15 @@ import Cart from "./Components/Pages/Cart";
 import Home from "./Components/Pages/Home";
 import ProductItem from "./Components/Pages/ProductItem";
 import Products from "./Components/Pages/Products";
-import Profile from "./Components/Pages/Profile";
+import Profile from "./Components/Pages/LogIn";
 import Footer from "./Components/StaticComponents/Footer";
 import Header from "./Components/StaticComponents/Header";
-import Users from "./Components/Pages/Users";
-import UserItem from "./Components/Pages/UserItem";
+import LogIn from "./Components/Pages/LogIn";
+import SignIn from "./Components/Pages/SignIn";
 
 export const ThemeContext = createContext({ toggleMode: () => {} });
 
 function App() {
-
   const [mode, setMode] = useState<"dark" | "light">("light");
   const theme = createTheme({
     palette: {
@@ -77,7 +76,8 @@ function App() {
                 <Route path="products/:id" element={<ProductItem />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/login" element={<LogIn />} />
+                <Route path='/signin' element={<SignIn />} />
               </Routes>
             </BrowserRouter>
             <Footer />
