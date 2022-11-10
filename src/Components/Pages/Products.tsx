@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   ImageList,
@@ -8,15 +8,19 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
+import InfoIcon from "@mui/icons-material/Info";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
 import { RootState } from "../redux/store";
 import { fetchProducts } from "../redux/reducers/products";
-import SearchIcon from "@mui/icons-material/Search";
 import { addItemToCart } from "../redux/reducers/cart";
-import { CartProps } from "../types/cart";
+
 const Products = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const lastPage = 15;
+
   const products = useAppSelector((state: RootState) => state.productsReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -127,9 +131,9 @@ const Products = () => {
           </Button>
         </Box>
       </Box>
-      <ImageList sx={{ padding: 10 }} cols={4}>
+      <ImageList sx={{ padding: 10 }} cols={3} gap={4}>
         {filter.map((item) => (
-          <ImageListItem key={item.id}>
+          <ImageListItem key={item.id} sx={{ margin: 1.5 }}>
             <img src={`${item.images}`} alt={item.title} loading="lazy" />
             <ImageListItemBar
               title={item.title}
@@ -137,14 +141,23 @@ const Products = () => {
               actionIcon={
                 <IconButton
                   sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                  aria-label={`info about ${item.title}`}
+                  aria-label={`buy this ${item.title}`}
                   onClick={() =>
                     addToCart(item.id, item.title, item.price, item.images[0])
                   }
                 >
-                  <ShoppingCartIcon>
-                    <Link to={`/products/${item.id}`}></Link>
-                  </ShoppingCartIcon>
+                  <ShoppingCartIcon />
+                </IconButton>
+              }
+            />
+            <ImageListItemBar
+              position="top"
+              actionPosition="right"
+              actionIcon={
+                <IconButton aria-label={`info about ${item.title}`}>
+                  <Link to={`/products/${item.id}`}>
+                    <InfoIcon></InfoIcon>
+                  </Link>
                 </IconButton>
               }
             />

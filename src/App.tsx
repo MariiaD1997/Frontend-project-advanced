@@ -17,6 +17,7 @@ import UserItem from "./Components/Pages/UserItem";
 export const ThemeContext = createContext({ toggleMode: () => {} });
 
 function App() {
+
   const [mode, setMode] = useState<"dark" | "light">("light");
   const theme = createTheme({
     palette: {
@@ -72,10 +73,8 @@ function App() {
               <Header />
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/products">
-                  <Route path="" element={<Products />} />
-                  <Route path=":id" element={<ProductItem />} />
-                </Route>
+                <Route path="/products" element={<Products />} />
+                <Route path="products/:id" element={<ProductItem />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/users" element={<Users />} />
