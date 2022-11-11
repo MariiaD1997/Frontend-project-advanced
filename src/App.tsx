@@ -8,11 +8,10 @@ import Cart from "./Components/Pages/Cart";
 import Home from "./Components/Pages/Home";
 import ProductItem from "./Components/Pages/ProductItem";
 import Products from "./Components/Pages/Products";
-import Profile from "./Components/Pages/LogIn";
 import Footer from "./Components/StaticComponents/Footer";
 import Header from "./Components/StaticComponents/Header";
-import LogIn from "./Components/Pages/LogIn";
 import SignIn from "./Components/Pages/SignIn";
+import Profile from "./Components/Pages/Profile";
 
 export const ThemeContext = createContext({ toggleMode: () => {} });
 
@@ -76,7 +75,6 @@ function App() {
                 <Route path="products/:id" element={<ProductItem />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/login" element={<LogIn />} />
                 <Route path='/signin' element={<SignIn />} />
               </Routes>
             </BrowserRouter>
