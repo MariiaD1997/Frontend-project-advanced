@@ -12,9 +12,16 @@ const productsSlicer = createSlice({
   name: "products",
   initialState,
   reducers: {
-    sortByPrice: (state) => {
+    sortAsc: (state) => {
       state.sort((a, b) => a.price - b.price);
     },
+    sortDesc: (state) => {
+      state.sort((a, b) => b.price - a.price);
+    },
+    sortNames: (state) => {
+      state.sort((a, b) => (a.title > b.title ? 1 : -1));
+    },
+
     updateProduct: (state, action) => {
       console.log("I will update");
     },
@@ -26,5 +33,5 @@ const productsSlicer = createSlice({
   },
 });
 const productsReducer = productsSlicer.reducer;
-const { sortByPrice } = productsSlicer.actions;
+export const { sortAsc, sortDesc, sortNames } = productsSlicer.actions;
 export default productsReducer;

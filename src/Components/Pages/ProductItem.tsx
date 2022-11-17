@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import singleProductReducer, {
+import {
   fetchSingleProduct,
 } from "../redux/reducers/singleProduct";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -16,7 +16,6 @@ import {
 import { RootState } from "../redux/store";
 import { addItemToCart } from "../redux/reducers/cart";
 import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
-import { Product } from "../types/products";
 
 const ProductItem = () => {
   const params = useParams();

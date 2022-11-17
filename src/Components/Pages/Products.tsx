@@ -7,15 +7,25 @@ import {
   IconButton,
   Button,
   TextField,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  InputLabel,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SearchIcon from "@mui/icons-material/Search";
+
 import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
 import { RootState } from "../redux/store";
-import { fetchProducts } from "../redux/reducers/products";
 import { addItemToCart } from "../redux/reducers/cart";
+import {
+  fetchProducts,
+  sortAsc,
+  sortDesc,
+  sortNames,
+} from "../redux/reducers/products";
 
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
@@ -26,6 +36,7 @@ const Products = () => {
 
   const [category, setCategory] = useState("All");
   const [filter, setFilter] = useState(products);
+
   const filterProducts = (category: string) => {
     const filtered = products.filter((item) => item.category.name === category);
     setFilter(filtered);
@@ -46,7 +57,12 @@ const Products = () => {
     dispatch(addItemToCart({ id, title, price, image, quantity: 1 }));
   };
 
-  const priceSorted = () => {};
+  const [select, setSelect] = useState("");
+  //i will change event type soon
+  const selectHandler = (event: SelectChangeEvent) => {
+    setSelect(event.target.value);
+  };
+
   return (
     <Box>
       <Box display="flex">
@@ -70,6 +86,7 @@ const Products = () => {
           >
             <SearchIcon />
           </IconButton>
+
           <TextField
             sx={{ marginLeft: 2 }}
             value={search}
@@ -80,6 +97,17 @@ const Products = () => {
           />
         </Box>
         <Box gap={4}>
+          <Select label="Sort by Price" value={select} onChange={selectHandler}>
+            <MenuItem value="sortAsc" onClick={() => dispatch(sortAsc())}>
+              First show cheap products
+            </MenuItem>
+            <MenuItem value="sortDesc" onClick={() => dispatch(sortDesc())}>
+              First show expensive products
+            </MenuItem>
+            <MenuItem value="sortName" onClick={() => dispatch(sortNames())}>
+              Sort by names
+            </MenuItem>
+          </Select>
           <Button
             onClick={() => {
               setFilter(products);
