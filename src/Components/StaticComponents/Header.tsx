@@ -35,8 +35,6 @@ const Header = () => {
           <Link to="products">Products</Link>
           <Link to="cart">Cart</Link>
           <Link to="profile">Profile</Link>
-          <Link to="users">Users</Link>
-          <Link to="useritem">User</Link>
         </Box>
       </Box>
     </AppBar>

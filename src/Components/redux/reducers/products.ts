@@ -13,7 +13,7 @@ const productsSlicer = createSlice({
   initialState,
   reducers: {
     sortByPrice: (state) => {
-      state.sort((a, b) => (a.price > b.price ? 1 : -1));
+      state.sort((a, b) => a.price - b.price);
     },
     updateProduct: (state, action) => {
       console.log("I will update");

@@ -18,8 +18,6 @@ import { fetchProducts } from "../redux/reducers/products";
 import { addItemToCart } from "../redux/reducers/cart";
 
 const Products = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
   const products = useAppSelector((state: RootState) => state.productsReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -47,6 +45,8 @@ const Products = () => {
   ) => {
     dispatch(addItemToCart({ id, title, price, image }));
   };
+
+  const priceSorted = () => {};
   return (
     <Box>
       <Box display="flex">
