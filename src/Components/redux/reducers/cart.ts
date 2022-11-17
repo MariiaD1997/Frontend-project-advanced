@@ -7,10 +7,20 @@ const cartSlicer = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItemToCart: (state, action) => {
-      return [...state, action.payload];
+    addItemToCart: (state, action: PayloadAction<CartProps>) => {
+      const productInCart = state.find((item) => (item.id = action.payload.id));
+      if (productInCart) {
+        state.map((item) => {
+          if (item.id === action.payload.id) {
+            item.quantity = item.quantity + 1;
+            return item;
+          }
+        });
+      } else {
+        return [...state, action.payload];
+      }
     },
-    deleteFromCart: (state, action) => {
+    deleteFromCart: (state, action: PayloadAction<number>) => {
       return state.filter((item) => item.id !== action.payload);
     },
     increaseQuantity: (state, action) => {
@@ -28,16 +38,6 @@ const cartSlicer = createSlice({
           return item;
         }
       });
-    },
-    replaceCartItem: (state, action: PayloadAction<CartProps>) => {
-      const newCart = state.map((item) => {
-        if (item.id === action.payload.id) {
-          return action.payload;
-        } else {
-          return item;
-        }
-      });
-      return newCart;
     },
   },
 });

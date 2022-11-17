@@ -38,7 +38,7 @@ const ProductItem = () => {
     price: number,
     image: string
   ) => {
-    dispatch(addItemToCart({ id, title, price, image }));
+    dispatch(addItemToCart({ id, title, price, image, quantity: 1 }));
   };
 
   return (
