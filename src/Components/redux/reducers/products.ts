@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Action } from "@remix-run/router";
 import { Product } from "../../types/products";
+import axios from "axios";
 
 export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
-  const allProducts = await fetch("https://api.escuelajs.co/api/v1/products");
-  return await allProducts.json();
+  const result = await axios.get("https://api.escuelajs.co/api/v1/products");
+  const data = result.data;
+  return data
 });
 
 const initialState: Product[] = [];
