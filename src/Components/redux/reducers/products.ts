@@ -6,7 +6,7 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
   const result = await axios.get("https://api.escuelajs.co/api/v1/products");
   const data = result.data;
-  return data
+  return data;
 });
 
 const initialState: Product[] = [];
@@ -22,10 +22,6 @@ const productsSlicer = createSlice({
     },
     sortNames: (state) => {
       state.sort((a, b) => (a.title > b.title ? 1 : -1));
-    },
-
-    updateProduct: (state, action) => {
-      console.log("I will update");
     },
   },
   extraReducers: (build) => {

@@ -63,6 +63,10 @@ const Products = () => {
     setSelect(event.target.value);
   };
 
+  const onEdit = () => {
+    dispatch(updateOne());
+  };
+
   return (
     <Box>
       <Box display="flex">

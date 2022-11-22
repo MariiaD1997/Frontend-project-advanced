@@ -13,16 +13,24 @@ export const fetchSingleProduct = createAsyncThunk(
   }
 );
 
-export const updateProduct = createAsyncThunk(
+export const updateOne = createAsyncThunk(
   "updateOne",
-  async (id: number) => {
+  async ({ id, data }: { id: number; data: Product }) => {
     const result = await axios.put(
-      `https://api.escuelajs.co/api/v1/products/${id}`
+      `https://api.escuelajs.co/api/v1/products/${id}`,
+      data
     );
-    const data = result.data;
-    return data;
+    return result.data;
   }
 );
+
+export const deleteOne = createAsyncThunk("delete", async (id: number) => {
+  const result = await axios.delete(
+    `https://api.escuelajs.co/api/v1/products/${id}`
+  );
+  const data = result.data;
+  return data;
+});
 
 const initialState: Product[] = [];
 const singleProductSlicer = createSlice({
@@ -33,7 +41,17 @@ const singleProductSlicer = createSlice({
     build.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       return [action.payload];
     });
+    build.addCase(updateOne.fulfilled, (state, action) => {
+      return state.map((item) => {
+        if (item.id === action.payload.id) {
+          item = action.payload;
+        }
+        return item;
+      });
+    });
   },
 });
+
 const singleProductReducer = singleProductSlicer.reducer;
+export const { updateOne, deleteOne } = singleProductSlicer.actions;
 export default singleProductReducer;
