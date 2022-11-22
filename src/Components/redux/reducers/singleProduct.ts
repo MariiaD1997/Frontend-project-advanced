@@ -53,5 +53,4 @@ const singleProductSlicer = createSlice({
 });
 
 const singleProductReducer = singleProductSlicer.reducer;
-export const { updateOne, deleteOne } = singleProductSlicer.actions;
 export default singleProductReducer;

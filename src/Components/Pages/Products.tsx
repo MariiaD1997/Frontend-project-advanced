@@ -12,7 +12,7 @@ import {
   SelectChangeEvent,
   InputLabel,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
@@ -26,10 +26,15 @@ import {
   sortDesc,
   sortNames,
 } from "../redux/reducers/products";
+import { deleteOne } from "../redux/reducers/singleProduct";
 
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const user = useAppSelector(
+    (state: RootState) => state.usersReducer.currentUser
+  );
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -63,8 +68,12 @@ const Products = () => {
     setSelect(event.target.value);
   };
 
-  const onEdit = () => {
-    dispatch(updateOne());
+  const navigateToProduct = (id: number) => {
+    navigate(`/products/${id}`);
+  };
+
+  const onDelete = (id: number) => {
+    dispatch(deleteOne(id));
   };
 
   return (
@@ -174,10 +183,18 @@ const Products = () => {
                   sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                   aria-label={`buy this ${item.title}`}
                   onClick={() =>
-                    addToCart(item.id, item.title, item.price, item.images[0])
+                    user?.role === "admin"
+                      ? navigateToProduct(item.id)
+                      : addToCart(
+                          item.id,
+                          item.title,
+                          item.price,
+                          item.images[0]
+                        )
                   }
                 >
-                  <ShoppingCartIcon />
+                  {" "}
+                  {user?.role === "admin" ? "Edit" : <ShoppingCartIcon />}
                 </IconButton>
               }
             />
@@ -185,10 +202,15 @@ const Products = () => {
               position="top"
               actionPosition="right"
               actionIcon={
-                <IconButton aria-label={`info about ${item.title}`}>
-                  <Link to={`/products/${item.id}`}>
-                    <InfoIcon></InfoIcon>
-                  </Link>
+                <IconButton
+                  aria-label={`info about ${item.title}`}
+                  onClick={() =>
+                    user?.role === "admin"
+                      ? onDelete(item.id)
+                      : navigateToProduct(item.id)
+                  }
+                >
+                  {user?.role === "admin" ? "Delete" : <InfoIcon />}
                 </IconButton>
               }
             />
