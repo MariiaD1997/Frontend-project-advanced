@@ -193,7 +193,6 @@ const Products = () => {
                         )
                   }
                 >
-                  {" "}
                   {user?.role === "admin" ? "Edit" : <ShoppingCartIcon />}
                 </IconButton>
               }
