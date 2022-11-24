@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   ImageList,
@@ -20,12 +20,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
 import { RootState } from "../redux/store";
 import { addItemToCart } from "../redux/reducers/cart";
-import {
-  fetchProducts,
-  sortAsc,
-  sortDesc,
-  sortNames,
-} from "../redux/reducers/products";
+import { fetchProducts } from "../redux/reducers/products";
 import { deleteOne } from "../redux/reducers/singleProduct";
 
 const Products = () => {
@@ -63,9 +58,21 @@ const Products = () => {
   };
 
   const [select, setSelect] = useState("");
-  //i will change event type soon
-  const selectHandler = (event: SelectChangeEvent) => {
-    setSelect(event.target.value);
+
+  // I tried very hard to mahe this work with reducer but unfortunatelly
+  // it's the only logic that worked
+
+  const selectHandler = () => {
+    if (select === "asc") {
+      products.sort((a, b) => a.price - b.price);
+    }
+    if (select === "desc") {
+      products.sort((a, b) => b.price - a.price);
+    }
+
+    if (select === "sortNames") {
+      products.sort((a, b) => (a.title > b.title ? 1 : -1));
+    }
   };
 
   const navigateToProduct = (id: number) => {
@@ -110,16 +117,10 @@ const Products = () => {
           />
         </Box>
         <Box gap={4}>
-          <Select label="Sort by Price" value={select} onChange={selectHandler}>
-            <MenuItem value="sortAsc" onClick={() => dispatch(sortAsc())}>
-              First show cheap products
-            </MenuItem>
-            <MenuItem value="sortDesc" onClick={() => dispatch(sortDesc())}>
-              First show expensive products
-            </MenuItem>
-            <MenuItem value="sortName" onClick={() => dispatch(sortNames())}>
-              Sort by names
-            </MenuItem>
+          <Select label="Sort by Price" onChange={selectHandler}>
+            <MenuItem value="sortNames">Sort by names</MenuItem>
+            <MenuItem value="asc">First show cheap products</MenuItem>
+            <MenuItem value="desc">First show expensive products</MenuItem>
           </Select>
           <Button
             onClick={() => {

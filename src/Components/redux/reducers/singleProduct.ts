@@ -20,7 +20,6 @@ export const updateOne = createAsyncThunk(
       `https://api.escuelajs.co/api/v1/products/${id}`,
       data
     );
-    console.log(result.data);
     return result.data;
   }
 );

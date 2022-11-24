@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
 import { Product } from "../../types/products";
 import axios from "axios";
 
@@ -15,13 +14,13 @@ const productsSlicer = createSlice({
   initialState,
   reducers: {
     sortAsc: (state) => {
-      state.sort((a, b) => a.price - b.price);
+      state.slice().sort((a, b) => a.price - b.price);
     },
     sortDesc: (state) => {
-      state.sort((a, b) => b.price - a.price);
+      state.slice().sort((a, b) => b.price - a.price);
     },
     sortNames: (state) => {
-      state.sort((a, b) => (a.title > b.title ? 1 : -1));
+      state.slice().sort((a, b) => (a.title > b.title ? 1 : -1));
     },
   },
   extraReducers: (build) => {
@@ -31,5 +30,5 @@ const productsSlicer = createSlice({
   },
 });
 const productsReducer = productsSlicer.reducer;
-export const { sortAsc, sortDesc, sortNames } = productsSlicer.actions;
+//export const { sortAsc, sortDesc, sortNames } = productsSlicer.actions;
 export default productsReducer;

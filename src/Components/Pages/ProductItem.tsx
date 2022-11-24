@@ -30,8 +30,6 @@ const ProductItem = () => {
 
   const [currentTitle, setTitle] = useState("");
   const [currentPrice, setPrice] = useState(0);
-  console.log(currentPrice);
-  console.log(currentTitle);
 
   useEffect(() => {
     if (params.id != undefined) {
