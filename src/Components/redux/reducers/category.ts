@@ -5,7 +5,9 @@ import { Category } from "../../types/category";
 const initialState: Category[] = [];
 
 export const fetchCategories = createAsyncThunk("fetchCategories", async () => {
-  const result = await axios.get("https://api.escuelajs.co/api/v1/categories");
+  const result = await axios.get(
+    "https://api.escuelajs.co/api/v1/categories?offset=0&limit=5"
+  );
   const data = result.data;
   return data;
 });

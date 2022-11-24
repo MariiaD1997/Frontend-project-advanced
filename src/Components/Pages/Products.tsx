@@ -22,9 +22,13 @@ import { RootState } from "../redux/store";
 import { addItemToCart } from "../redux/reducers/cart";
 import { fetchProducts } from "../redux/reducers/products";
 import { deleteOne } from "../redux/reducers/singleProduct";
+import { fetchCategories } from "../redux/reducers/category";
 
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
+  const categories = useAppSelector(
+    (state: RootState) => state.categoryReducer
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(
@@ -32,6 +36,10 @@ const Products = () => {
   );
   useEffect(() => {
     dispatch(fetchProducts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const [category, setCategory] = useState("All");
@@ -60,7 +68,7 @@ const Products = () => {
   const [select, setSelect] = useState("");
 
   // I tried very hard to mahe this work with reducer but unfortunatelly
-  // it's the only logic that worked
+  // none of logic I tried didn't work
 
   const selectHandler = () => {
     if (select === "asc") {
@@ -130,46 +138,17 @@ const Products = () => {
           >
             All
           </Button>
-          <Button
-            onClick={() => {
-              filterProducts("Clothes");
-              setCategory("Clothes");
-            }}
-          >
-            Clothes
-          </Button>
-          <Button
-            onClick={() => {
-              filterProducts("Electronics");
-              setCategory("Electronics");
-            }}
-          >
-            Electronics
-          </Button>
-          <Button
-            onClick={() => {
-              filterProducts("Furniture");
-              setCategory("Furniture");
-            }}
-          >
-            Furniture
-          </Button>
-          <Button
-            onClick={() => {
-              filterProducts("Shoes");
-              setCategory("Shoes");
-            }}
-          >
-            Shoes
-          </Button>
-          <Button
-            onClick={() => {
-              filterProducts("Others");
-              setCategory("Others");
-            }}
-          >
-            Others
-          </Button>
+          {categories.map((category) => (
+            <Button
+              key={category.id}
+              onClick={() => {
+                filterProducts(category.name);
+                setCategory(category.name);
+              }}
+            >
+              {category.name}
+            </Button>
+          ))}
         </Box>
       </Box>
       <ImageList sx={{ padding: 10 }} cols={3} gap={4}>
