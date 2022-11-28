@@ -132,6 +132,7 @@ const Products = () => {
           </Select>
           <Button
             onClick={() => {
+              filterProducts("All");
               setFilter(products);
               setCategory("All");
             }}

@@ -8,6 +8,17 @@ export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
   return data;
 });
 
+export const updateOne = createAsyncThunk(
+  "updateOne",
+  async ({ id, data }: { id: number; data: Product }) => {
+    const result = await axios.put(
+      `https://api.escuelajs.co/api/v1/products/${id}`,
+      data
+    );
+    return result.data;
+  }
+);
+
 const initialState: Product[] = [];
 const productsSlicer = createSlice({
   name: "products",
@@ -26,8 +37,16 @@ const productsSlicer = createSlice({
   extraReducers: (build) => {
     build.addCase(fetchProducts.fulfilled, (state, action) => {
       return action.payload;
+    }), 
+  build.addCase(updateOne.fulfilled, (state, action) => {
+    return state.map((item) => {
+      if (item.id === action.payload.id) {
+        item = action.payload;
+      }
+      return item;
     });
-  },
+  });
+  }
 });
 const productsReducer = productsSlicer.reducer;
 //export const { sortAsc, sortDesc, sortNames } = productsSlicer.actions;
