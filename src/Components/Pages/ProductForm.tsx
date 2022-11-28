@@ -28,6 +28,18 @@ const ProductForm = () => {
     dispatch(deleteOne(id));
   };
 
+  useEffect(() => {
+    if (productItem.id) {
+      setTitle(productItem.title);
+      setPrice(productItem.price);
+      setDescr(productItem.description);
+      setImg(productItem.images[0]);
+      setId(productItem.category.id);
+      setName(productItem.category.name);
+      setCatImg(productItem.category.image);
+    }
+  }, []);
+
   const onUpdate = (id: number) => {
     dispatch(
       updateOne({
@@ -48,25 +60,9 @@ const ProductForm = () => {
     );
   };
 
-  useEffect(() => {
-    if (productItem) {
-      setTitle(productItem.title);
-      setPrice(productItem.price);
-      setDescr(productItem.description);
-      setImg(productItem.images[0]);
-      setId(productItem.category.id);
-      setName(productItem.category.name);
-      setCatImg(productItem.category.image);
-    }
-  }, []);
-
   return (
-    <Box>
-      <Box
-        component="form"
-        autoComplete="off"
-        sx={{ display: user?.role === "admin" ? "flex" : "none" }}
-      >
+    <Box sx={{ display: user?.role === "admin" ? "flex" : "none" }}>
+      <Box component="form" autoComplete="off" display="flex">
         <Box>
           <Typography>Change product characteristics</Typography>
           <TextField
@@ -116,9 +112,9 @@ const ProductForm = () => {
             value={catImg}
           />
         </Box>
-        <Button onClick={() => onUpdate(productItem?.id)}>Edit</Button>
-        <Button onClick={() => onDelete(productItem?.id)}>Delete</Button>
       </Box>
+      <Button onClick={() => onUpdate(productItem?.id)}>Edit</Button>
+      <Button onClick={() => onDelete(productItem?.id)}>Delete</Button>
     </Box>
   );
 };
