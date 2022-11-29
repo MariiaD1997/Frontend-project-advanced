@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 import { RootState } from "../redux/store";
@@ -16,10 +15,10 @@ const ProductForm = () => {
   const [currName, setName] = useState("");
   const [catImg, setCatImg] = useState("");
 
+  const dispatch = useAppDispatch();
   const productItem = useAppSelector(
     (state: RootState) => state.singleProductReducer
   );
-  const dispatch = useAppDispatch();
   const user = useAppSelector(
     (state: RootState) => state.usersReducer.currentUser
   );
@@ -113,8 +112,8 @@ const ProductForm = () => {
           />
         </Box>
       </Box>
-      <Button onClick={() => onUpdate(productItem?.id)}>Edit</Button>
-      <Button onClick={() => onDelete(productItem?.id)}>Delete</Button>
+      <Button onClick={() => onUpdate(productItem.id)}>Edit</Button>
+      <Button onClick={() => onDelete(productItem.id)}>Delete</Button>
     </Box>
   );
 };

@@ -64,6 +64,8 @@ const Cart = () => {
                     <RemoveIcon />
                   </IconButton>
                 </ButtonGroup>
+                <Typography>{item.id}</Typography>
+                <Typography>{item.title}</Typography>
                 <Typography>{item.price * item.quantity}</Typography>
               </ImageListItem>
             ))}

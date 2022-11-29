@@ -67,19 +67,16 @@ const Products = () => {
 
   const [select, setSelect] = useState("");
 
-  // I tried very hard to mahe this work with reducer but unfortunatelly
-  // none of logic I tried didn't work
-
-  const selectHandler = () => {
+  const selectHandler = (select: string) => {
     if (select === "asc") {
-      products.sort((a, b) => a.price - b.price);
+      setFilter([...filter].sort((a, b) => a.price - b.price));
     }
     if (select === "desc") {
-      products.sort((a, b) => b.price - a.price);
+      setFilter([...filter].sort((a, b) => b.price - a.price));
     }
 
     if (select === "sortNames") {
-      products.sort((a, b) => (a.title > b.title ? 1 : -1));
+      setFilter([...filter].sort((a, b) => (a.title > b.title ? 1 : -1)));
     }
   };
 
@@ -125,10 +122,31 @@ const Products = () => {
           />
         </Box>
         <Box gap={4}>
-          <Select label="Sort by Price" onChange={selectHandler}>
-            <MenuItem value="sortNames">Sort by names</MenuItem>
-            <MenuItem value="asc">First show cheap products</MenuItem>
-            <MenuItem value="desc">First show expensive products</MenuItem>
+          <Select label="Sort by Price">
+            <MenuItem
+              value="sortNames"
+              onClick={() => {
+                selectHandler("sortNames");
+              }}
+            >
+              Sort by names
+            </MenuItem>
+            <MenuItem
+              value="asc"
+              onClick={() => {
+                selectHandler("asc");
+              }}
+            >
+              First show cheap products
+            </MenuItem>
+            <MenuItem
+              value="desc"
+              onClick={() => {
+                selectHandler("desc");
+              }}
+            >
+              First show expensive products
+            </MenuItem>
           </Select>
           <Button
             onClick={() => {

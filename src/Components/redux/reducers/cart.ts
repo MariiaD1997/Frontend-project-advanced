@@ -8,7 +8,9 @@ const cartSlicer = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartProps>) => {
-      const productInCart = state.find((item) => (item.id = action.payload.id));
+      const productInCart = state.find((item) => {
+        return item.id === action.payload.id;
+      });
       if (productInCart) {
         state.map((item) => {
           if (item.id === action.payload.id) {
@@ -17,7 +19,7 @@ const cartSlicer = createSlice({
           }
         });
       } else {
-        return [...state, action.payload];
+        state.push(action.payload);
       }
     },
     deleteFromCart: (state, action: PayloadAction<number>) => {
