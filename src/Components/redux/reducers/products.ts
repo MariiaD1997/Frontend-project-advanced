@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Product } from "../../types/products";
 import axios from "axios";
 
@@ -24,6 +24,7 @@ const productsSlicer = createSlice({
   name: "products",
   initialState,
   reducers: {
+    /*
     sortAsc: (state) => {
       state.slice().sort((a, b) => a.price - b.price);
     },
@@ -33,21 +34,23 @@ const productsSlicer = createSlice({
     sortNames: (state) => {
       state.slice().sort((a, b) => (a.title > b.title ? 1 : -1));
     },
+    */
   },
   extraReducers: (build) => {
-    build.addCase(fetchProducts.fulfilled, (state, action) => {
-      return action.payload;
-    }), 
-  build.addCase(updateOne.fulfilled, (state, action) => {
-    return state.map((item) => {
-      if (item.id === action.payload.id) {
-        item = action.payload;
-      }
-      return item;
-    });
-  });
-  }
+    build
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.sort();
+        return action.payload;
+      })
+      .addCase(updateOne.fulfilled, (state, action) => {
+        return state.map((item) => {
+          if (item.id === action.payload.id) {
+            item = action.payload;
+          }
+          return item;
+        });
+      });
+  },
 });
 const productsReducer = productsSlicer.reducer;
-//export const { sortAsc, sortDesc, sortNames } = productsSlicer.actions;
 export default productsReducer;

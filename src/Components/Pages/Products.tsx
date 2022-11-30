@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   ImageList,
@@ -9,10 +9,8 @@ import {
   TextField,
   Select,
   MenuItem,
-  SelectChangeEvent,
-  InputLabel,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
@@ -64,8 +62,6 @@ const Products = () => {
   ) => {
     dispatch(addItemToCart({ id, title, price, image, quantity: 1 }));
   };
-
-  const [select, setSelect] = useState("");
 
   const selectHandler = (select: string) => {
     if (select === "asc") {

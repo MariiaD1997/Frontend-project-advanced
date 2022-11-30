@@ -6,23 +6,6 @@ export const fetchUsers = createAsyncThunk("fetchProducts", async () => {
   const allUsers = await axios.get("https://api.escuelajs.co/api/v1/users");
   return allUsers.data;
 });
-/*
-export const login = createAsyncThunk(
-  "login",
-  async (data: UserLoginCredential) => {
-    try {
-      const response = await axios.post(
-        "https://api.escuelajs.co/api/v1/auth/login",
-        data
-      );
-      const token = response.data;
-      localStorage.setItem("token", token.access_token);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-*/
 
 export const authenticate = createAsyncThunk(
   "authenticate",

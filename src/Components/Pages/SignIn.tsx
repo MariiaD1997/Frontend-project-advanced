@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,18 +9,21 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { userSchema } from "../schema/userForm";
 import { UserFormData } from "../types/form";
 
 const SignIn = () => {
-  const { register, handleSubmit } = useForm<UserFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserFormData>({
+    resolver: yupResolver(userSchema),
+  });
   const onSubmit: SubmitHandler<UserFormData> = (data) => {
-    /*
-     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    */
+    console.log(data);
   };
 
   return (
@@ -47,42 +49,54 @@ const SignIn = () => {
               <TextField
                 autoComplete="given-name"
                 {...register("firstName")}
-                required
                 fullWidth
                 id="firstName"
                 label="First Name"
                 autoFocus
               />
+              <Typography>{errors.firstName?.message}</Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 fullWidth
                 id="lastName"
                 {...register("lastName")}
+                label="Last Name"
                 autoComplete="family-name"
               />
+              <Typography>{errors.lastName?.message}</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
-                name="email"
+                {...register("email")}
                 autoComplete="email"
               />
+              <Typography>{errors.email?.message}</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
-                name="password"
+                {...register("password")}
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="new-password"
               />
+              <Typography>{errors.password?.message}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                {...register("re_password")}
+                label="Confirm password"
+                type="password"
+                id="re_password"
+                autoComplete="new-password"
+              />
+              <Typography>{errors.re_password?.message}</Typography>
             </Grid>
           </Grid>
           <Button
