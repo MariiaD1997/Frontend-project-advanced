@@ -18,7 +18,7 @@ import { userSchema } from "../schema/userForm";
 import { UserFormData } from "../types/form";
 import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
 import { UserLoginCredential } from "../types/user";
-import { authenticate, fetchUsers } from "../redux/reducers/users";
+import { authenticate, createUser, fetchUsers } from "../redux/reducers/users";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -31,31 +31,33 @@ const SignIn = () => {
     resolver: yupResolver(userSchema),
   });
 
-  const onSubmit: SubmitHandler<UserFormData> = (data) => {
-    data["avatar"] = "https://api.lorem.space/image/face?w=640&h=480&r=5073";
-    /*
-    const registrate = async (data: UserFormData) => {
-      await axios
-        .post("https://api.escuelajs.co/api/v1/users/", data)
-        .then((responce) => {
-          const input: UserLoginCredential = {
-            email: responce.data.email,
-            password: responce.data.password,
-          };
-          auth(input);
-        });
-    };
-    return registrate(data);
-    */
+  const login = async (data: UserLoginCredential) => {
+    try {
+      const response = await axios.post(
+        "https://api.escuelajs.co/api/v1/auth/login",
+        data
+      );
+      const token = response.data;
+      localStorage.setItem("token", token.access_token);
+      dispatch(authenticate(token.access_token));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<UserFormData> = (data) => {
+    data["avatar"] = "https://api.lorem.space/image/face?w=640&h=480&r=5073";
+    console.log(data);
+    dispatch(createUser(data));
+    login(data);
+  };
 
+  /* const navigate = useNavigate();
   const user = useAppSelector((state) => state.usersReducer.currentUser);
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
-
+*/
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

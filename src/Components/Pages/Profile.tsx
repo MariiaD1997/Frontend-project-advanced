@@ -21,8 +21,8 @@ import { RootState } from "../redux/store";
 import { logout } from "../redux/reducers/users";
 
 const Profile = () => {
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const user = useAppSelector(
     (state: RootState) => state.usersReducer.currentUser
   );
@@ -35,7 +35,6 @@ const Profile = () => {
       dispatch(authenticate(token));
     }
   }, []);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
