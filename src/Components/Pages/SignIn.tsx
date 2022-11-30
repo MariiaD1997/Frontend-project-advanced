@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,11 +12,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 
 import { userSchema } from "../schema/userForm";
 import { UserFormData } from "../types/form";
+import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
+import { UserLoginCredential } from "../types/user";
+import { authenticate, fetchUsers } from "../redux/reducers/users";
 
 const SignIn = () => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -22,9 +30,31 @@ const SignIn = () => {
   } = useForm<UserFormData>({
     resolver: yupResolver(userSchema),
   });
+
   const onSubmit: SubmitHandler<UserFormData> = (data) => {
-    console.log(data);
+    data["avatar"] = "https://api.lorem.space/image/face?w=640&h=480&r=5073";
+    /*
+    const registrate = async (data: UserFormData) => {
+      await axios
+        .post("https://api.escuelajs.co/api/v1/users/", data)
+        .then((responce) => {
+          const input: UserLoginCredential = {
+            email: responce.data.email,
+            password: responce.data.password,
+          };
+          auth(input);
+        });
+    };
+    return registrate(data);
+    */
   };
+
+  const navigate = useNavigate();
+
+  const user = useAppSelector((state) => state.usersReducer.currentUser);
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user, navigate]);
 
   return (
     <Container component="main" maxWidth="xs">

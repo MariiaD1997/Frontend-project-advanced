@@ -4,4 +4,5 @@ export interface UserFormData {
   email: string;
   password: string;
   re_password: string;
+  avatar: string;
 }

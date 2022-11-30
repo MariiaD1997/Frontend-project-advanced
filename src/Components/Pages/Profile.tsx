@@ -14,10 +14,12 @@ import {
   Avatar,
 } from "@mui/material";
 import axios from "axios";
+
 import { useAppDispatch, useAppSelector } from "../hooks/reactHooks";
 import { authenticate, fetchUsers } from "../redux/reducers/users";
 import { RootState } from "../redux/store";
 import { logout } from "../redux/reducers/users";
+
 const Profile = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
@@ -33,6 +35,7 @@ const Profile = () => {
       dispatch(authenticate(token));
     }
   }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -47,6 +50,7 @@ const Profile = () => {
       console.log(e);
     }
   };
+
   const logoutFromProfile = () => {
     dispatch(logout());
   };
