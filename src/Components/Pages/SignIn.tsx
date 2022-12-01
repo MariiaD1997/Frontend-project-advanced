@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,9 +14,9 @@ import axios from "axios";
 
 import { userSchema } from "../schema/userForm";
 import { UserFormData } from "../types/form";
-import { useAppSelector, useAppDispatch } from "../hooks/reactHooks";
+import { useAppDispatch } from "../hooks/reactHooks";
 import { UserLoginCredential } from "../types/user";
-import { authenticate, createUser, fetchUsers } from "../redux/reducers/users";
+import { authenticate } from "../redux/reducers/users";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -31,11 +29,11 @@ const SignIn = () => {
     resolver: yupResolver(userSchema),
   });
 
-  const login = async (data: UserLoginCredential) => {
+  const login = async (loginData: UserLoginCredential) => {
     try {
       const response = await axios.post(
         "https://api.escuelajs.co/api/v1/auth/login",
-        data
+        loginData
       );
       const token = response.data;
       localStorage.setItem("token", token.access_token);
@@ -45,11 +43,25 @@ const SignIn = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<UserFormData> = (data) => {
-    data["avatar"] = "https://api.lorem.space/image/face?w=640&h=480&r=5073";
-    console.log(data);
-    dispatch(createUser(data));
-    login(data);
+  const registrate = async (regData: UserFormData) => {
+    try {
+      await axios.post("https://api.escuelajs.co/api/v1/users/", regData);
+      /*.then((responce) => {
+          const input: UserLoginCredential = {
+            email: responce.data.email,
+            password: responce.data.password,
+          };
+          login(input);
+        });*/
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSubmit = (data: UserFormData) => {
+    data["avatar"] = 'https://api.lorem.space/image/face?w=640&h=480&r=4491';
+     console.log(data);
+    registrate(data);
   };
 
   /* const navigate = useNavigate();
@@ -77,36 +89,24 @@ const SignIn = () => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                {...register("firstName")}
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-              <Typography>{errors.firstName?.message}</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="lastName"
-                {...register("lastName")}
-                label="Last Name"
+                {...register("name")}
+                label="Name"
                 autoComplete="family-name"
               />
-              <Typography>{errors.lastName?.message}</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="email"
+                type="email"
                 label="Email Address"
                 {...register("email")}
                 autoComplete="email"
               />
-              <Typography>{errors.email?.message}</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -117,18 +117,6 @@ const SignIn = () => {
                 id="password"
                 autoComplete="new-password"
               />
-              <Typography>{errors.password?.message}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                {...register("re_password")}
-                label="Confirm password"
-                type="password"
-                id="re_password"
-                autoComplete="new-password"
-              />
-              <Typography>{errors.re_password?.message}</Typography>
             </Grid>
           </Grid>
           <Button

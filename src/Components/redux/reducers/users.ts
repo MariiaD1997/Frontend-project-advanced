@@ -27,21 +27,6 @@ export const authenticate = createAsyncThunk(
   }
 );
 
-export const createUser = createAsyncThunk(
-  "createUser",
-  async (data: UserFormData) => {
-    try {
-      const response = await axios.post(
-        "https://api.escuelajs.co/api/v1/users/",
-        data
-      );
-      return response.data;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
 const initialState: UserReducer = {
   users: [],
   currentUser: undefined,
