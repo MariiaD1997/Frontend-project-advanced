@@ -1,16 +1,11 @@
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import {
-  Box,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
-const PaginationControlled = () => {
+import { Product } from "../types/products";
+
+const PaginationControlled = ({ filter }: Product[]) => {
   const [page, setPage] = useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);

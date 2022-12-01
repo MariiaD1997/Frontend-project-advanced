@@ -63,7 +63,6 @@ const SignUp = () => {
 
   const onSubmit = (data: UserFormData) => {
     data["avatar"] = "https://api.lorem.space/image/face?w=640&h=480&r=4491";
-    console.log(data);
     registrate(data);
   };
 

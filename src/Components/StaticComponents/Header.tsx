@@ -23,7 +23,7 @@ const Header = () => {
             <NightsStayIcon />
           )}
         </IconButton>
-        <Typography variant="h4">My site</Typography>
+        <Typography variant="h4">BE YOURSELF</Typography>
         <Box
           display="flex"
           justifyContent="space-around"

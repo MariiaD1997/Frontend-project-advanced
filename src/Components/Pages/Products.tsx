@@ -21,6 +21,7 @@ import { addItemToCart } from "../redux/reducers/cart";
 import { fetchProducts } from "../redux/reducers/products";
 import { deleteOne } from "../redux/reducers/singleProduct";
 import { fetchCategories } from "../redux/reducers/category";
+import PaginationControlled from "./Pagination";
 
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
@@ -32,16 +33,16 @@ const Products = () => {
   const user = useAppSelector(
     (state: RootState) => state.usersReducer.currentUser
   );
+  const [category, setCategory] = useState("All");
+  const [filter, setFilter] = useState(products);
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+    setFilter(products);
+  }, [dispatch, setFilter]);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
-
-  const [category, setCategory] = useState("All");
-  const [filter, setFilter] = useState(products);
 
   const filterProducts = (category: string) => {
     const filtered = products.filter((item) => item.category.name === category);
@@ -211,6 +212,7 @@ const Products = () => {
           </ImageListItem>
         ))}
       </ImageList>
+      <PaginationControlled filter={filter} />
     </Box>
   );
 };
