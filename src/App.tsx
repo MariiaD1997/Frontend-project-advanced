@@ -10,7 +10,7 @@ import ProductItem from "./Components/Pages/ProductItem";
 import Products from "./Components/Pages/Products";
 import Footer from "./Components/StaticComponents/Footer";
 import Header from "./Components/StaticComponents/Header";
-import SignIn from "./Components/Pages/SignIn";
+import SignUp from "./Components/Pages/SignUp";
 import Profile from "./Components/Pages/Profile";
 
 export const ThemeContext = createContext({ toggleMode: () => {} });
@@ -75,7 +75,7 @@ function App() {
                 <Route path="products/:id" element={<ProductItem />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path='/signin' element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
               </Routes>
             </BrowserRouter>
             <Footer />
