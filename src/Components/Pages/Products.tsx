@@ -22,6 +22,7 @@ import { fetchProducts } from "../redux/reducers/products";
 import { deleteOne } from "../redux/reducers/singleProduct";
 import { fetchCategories } from "../redux/reducers/category";
 import PaginationControlled from "./Pagination";
+import { Product } from "../types/products";
 
 const Products = () => {
   const products = useAppSelector((state: RootState) => state.productsReducer);
@@ -33,6 +34,7 @@ const Products = () => {
   const user = useAppSelector(
     (state: RootState) => state.usersReducer.currentUser
   );
+  const [prodList, setProdList] = useState<Product[]>([]);
   const [category, setCategory] = useState("All");
   const [filter, setFilter] = useState(products);
   useEffect(() => {
@@ -168,7 +170,7 @@ const Products = () => {
         </Box>
       </Box>
       <ImageList sx={{ padding: 10 }} cols={3} gap={4}>
-        {filter.map((item) => (
+        {prodArray.map((item) => (
           <ImageListItem key={item.id} sx={{ margin: 1.5 }}>
             <img src={`${item.images}`} alt={item.title} loading="lazy" />
             <ImageListItemBar
@@ -212,7 +214,7 @@ const Products = () => {
           </ImageListItem>
         ))}
       </ImageList>
-      <PaginationControlled filter={filter} />
+      <PaginationControlled filter={filter} prodArray={currentProd} />
     </Box>
   );
 };
