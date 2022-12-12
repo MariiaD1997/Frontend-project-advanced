@@ -68,14 +68,14 @@ const Products = () => {
 
   const selectHandler = (select: string) => {
     if (select === "asc") {
-      setFilter([...filter].sort((a, b) => a.price - b.price));
+      setProdList([...prodList].sort((a, b) => a.price - b.price));
     }
     if (select === "desc") {
-      setFilter([...filter].sort((a, b) => b.price - a.price));
+      setProdList([...prodList].sort((a, b) => b.price - a.price));
     }
 
     if (select === "sortNames") {
-      setFilter([...filter].sort((a, b) => (a.title > b.title ? 1 : -1)));
+      setProdList([...prodList].sort((a, b) => (a.title > b.title ? 1 : -1)));
     }
   };
 
@@ -121,7 +121,7 @@ const Products = () => {
           />
         </Box>
         <Box gap={4}>
-          <Select label="Sort by Price">
+          <Select label="Sort by Price" value="">
             <MenuItem
               value="sortNames"
               onClick={() => {
@@ -170,7 +170,7 @@ const Products = () => {
         </Box>
       </Box>
       <ImageList sx={{ padding: 10 }} cols={3} gap={4}>
-        {prodArray.map((item) => (
+        {prodList.map((item) => (
           <ImageListItem key={item.id} sx={{ margin: 1.5 }}>
             <img src={`${item.images}`} alt={item.title} loading="lazy" />
             <ImageListItemBar
@@ -214,7 +214,7 @@ const Products = () => {
           </ImageListItem>
         ))}
       </ImageList>
-      <PaginationControlled filter={filter} prodArray={currentProd} />
+      <PaginationControlled filter={filter} setProdList={setProdList} />
     </Box>
   );
 };
