@@ -12,7 +12,7 @@ const Header = () => {
   const theme = useTheme();
   return (
     <AppBar position="static">
-      <Box display="flex" justifyContent="space-around">
+      <Box display="flex" justifyContent="space-around" padding={2}>
         <IconButton
           onClick={() => colorMode.toggleMode()}
           style={{ color: "#000000" }}
