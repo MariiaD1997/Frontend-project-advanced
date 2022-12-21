@@ -61,59 +61,67 @@ const ProductForm = () => {
 
   return (
     <Box sx={{ display: user?.role === "admin" ? "flex" : "none" }}>
-      <Box component="form" autoComplete="off" display="flex">
-        <Box>
-          <Typography>Change product characteristics</Typography>
-          <TextField
-            variant="filled"
-            label="Change title"
-            onChange={(e) => setTitle(e.target.value)}
-            value={currentTitle}
-          />
-          <TextField
-            variant="filled"
-            label="Change price"
-            onChange={(e) => setPrice(Number(e.target.value))}
-            value={currentPrice}
-          />
-
-          <TextField
-            variant="filled"
-            label="Change image link"
-            onChange={(e) => setImg(e.target.value)}
-            value={[currentImg]}
-          />
-          <TextField
-            variant="filled"
-            label="Change description"
-            onChange={(e) => setDescr(e.target.value)}
-            value={currentDescr}
-          />
+      <Box
+        component="form"
+        autoComplete="off"
+        display="flex"
+        flexDirection="column"
+      >
+        <Box display="flex">
+          <Box>
+            <Typography>Change product characteristics</Typography>
+            <TextField
+              variant="filled"
+              label="Change title"
+              onChange={(e) => setTitle(e.target.value)}
+              value={currentTitle}
+            />
+            <TextField
+              variant="filled"
+              label="Change price"
+              onChange={(e) => setPrice(Number(e.target.value))}
+              value={currentPrice}
+            />
+            <TextField
+              variant="filled"
+              label="Change image link"
+              onChange={(e) => setImg(e.target.value)}
+              value={[currentImg]}
+            />
+            <TextField
+              variant="filled"
+              label="Change description"
+              onChange={(e) => setDescr(e.target.value)}
+              value={currentDescr}
+            />
+          </Box>
+          <Box>
+            <Typography>Change category characteristics:</Typography>
+            <TextField
+              variant="filled"
+              label="Change id"
+              onChange={(e) => setId(Number(e.target.value))}
+              value={categoryId}
+            />
+            <TextField
+              variant="filled"
+              label="Change category name"
+              onChange={(e) => setName(e.target.value)}
+              value={currName}
+            />
+            <TextField
+              variant="filled"
+              label="Change category image "
+              onChange={(e) => setCatImg(e.target.value)}
+              value={catImg}
+            />
+          </Box>
         </Box>
-        <Box>
-          <Typography>Change category characteristics:</Typography>
-          <TextField
-            variant="filled"
-            label="Change id"
-            onChange={(e) => setId(Number(e.target.value))}
-            value={categoryId}
-          />
-          <TextField
-            variant="filled"
-            label="Change category name"
-            onChange={(e) => setName(e.target.value)}
-            value={currName}
-          />
-          <TextField
-            variant="filled"
-            label="Change category image "
-            onChange={(e) => setCatImg(e.target.value)}
-            value={catImg}
-          />
+        <Box sx={{ padding: 2 }}>
+          <Button onClick={() => onUpdate(productItem.id)}>Edit</Button>
+          <Button onClick={() => onDelete(productItem.id)}>Delete</Button>
         </Box>
       </Box>
-      <Button onClick={() => onUpdate(productItem.id)}>Edit</Button>
-      <Button onClick={() => onDelete(productItem.id)}>Delete</Button>
     </Box>
   );
 };
