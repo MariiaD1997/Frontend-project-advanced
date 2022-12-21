@@ -22,7 +22,7 @@ const Footer = () => {
           mt: "auto",
           height: "5vh",
           textAlign: "center",
-          backgroundColor: "#018E42",
+          backgroundColor: "#496DDB",
         }}
       >
         <Container maxWidth="lg">

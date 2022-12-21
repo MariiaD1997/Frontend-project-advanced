@@ -8,7 +8,6 @@ import Cart from "./Components/Pages/Cart";
 import Home from "./Components/Pages/Home";
 import ProductItem from "./Components/Pages/ProductItem";
 import Products from "./Components/Pages/Products";
-import Footer from "./Components/StaticComponents/Footer";
 import Header from "./Components/StaticComponents/Header";
 import SignUp from "./Components/Pages/SignUp";
 import Profile from "./Components/Pages/Profile";
@@ -23,21 +22,21 @@ function App() {
       ...(mode === "light"
         ? {
             primary: {
-              main: "#018E42",
+              main: "#496DDB",
             },
             secondary: {
-              main: "#700353",
+              main: "#C95D63",
             },
             text: {
               primary: "#07393C",
               secondary: "#93827F",
             },
             background: {
-              default: "#E0D2C3",
+              default: "#FFFFFF",
             },
           }
         : {
-            primary: { main: "#1b2845" },
+            primary: { main: "#BFD3C1" },
             secondary: { main: "#7e7f9a" },
             text: {
               primary: "#e8ebe4",
@@ -78,7 +77,6 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
               </Routes>
             </BrowserRouter>
-            <Footer />
           </Box>
         </ThemeProvider>
       </ThemeContext.Provider>
