@@ -45,20 +45,20 @@ const Cart = () => {
                 <img src={`${item.image}`} alt={item.title} loading="lazy" />
                 <ButtonGroup>
                   <IconButton
-                    sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                    sx={{ color: "#496DDB" }}
                     onClick={() => deleteItem(item.id)}
                   >
                     <DeleteIcon />
                   </IconButton>
                   <IconButton
-                    sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                    sx={{ color: "#496DDB" }}
                     onClick={() => incrQuantity(item.id)}
                   >
                     <AddIcon />
                   </IconButton>
                   <Typography>{item.quantity}</Typography>
                   <IconButton
-                    sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                    sx={{ color: "#496DDB" }}
                     onClick={() => decrQuantity(item.id)}
                   >
                     <RemoveIcon />

@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { fetchSingleProduct } from "../redux/reducers/singleProduct";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Box, IconButton, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 import { RootState } from "../redux/store";
 import { addItemToCart } from "../redux/reducers/cart";
@@ -33,26 +34,35 @@ const ProductItem = () => {
   };
 
   return (
-    <Box key={productItem.id}>
-      <Box display="flex" flexDirection="column">
-        <img src={`${productItem.images}`} loading="lazy" />
-        <Typography>{productItem.title}</Typography>
-        <Typography>{productItem.price}</Typography>
-        <IconButton
-          sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-          onClick={() =>
-            addToCart(
-              productItem.id,
-              productItem.title,
-              productItem.price,
-              productItem.images[0]
-            )
-          }
-        >
-          <ShoppingCartIcon />
-        </IconButton>
-        <Typography variant="h5">{productItem.description}</Typography>
-      </Box>
+    <Box key={productItem.id} sx={{ marginTop: 3 }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <img src={`${productItem.images}`} loading="lazy" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box display="flex" flexDirection="column">
+            <Typography variant="h3" sx={{ marginTop: 3 }}>
+              {productItem.title}
+            </Typography>
+            <Typography variant="h5">{productItem.price}</Typography>
+            <IconButton
+              sx={{ color: "#496DDB" }}
+              onClick={() =>
+                addToCart(
+                  productItem.id,
+                  productItem.title,
+                  productItem.price,
+                  productItem.images[0]
+                )
+              }
+            >
+              <ShoppingCartIcon />
+            </IconButton>
+            <Typography variant="h5">{productItem.description}</Typography>
+          </Box>
+        </Grid>
+      </Grid>
+
       <ProductForm />
     </Box>
   );

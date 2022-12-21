@@ -134,7 +134,7 @@ const Profile = () => {
           </Box>
         )}{" "}
         {user?.role === "admin" && (
-          <Box>
+          <Box sx={{ width: 800 }}>
             <ImageList cols={2} gap={4}>
               {userList.map((item) => (
                 <ImageListItem key={item.id}>

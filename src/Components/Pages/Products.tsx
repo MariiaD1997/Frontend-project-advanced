@@ -178,7 +178,7 @@ const Products = () => {
               subtitle={item.price}
               actionIcon={
                 <IconButton
-                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                  sx={{ color: "#496DDB" }}
                   aria-label={`buy this ${item.title}`}
                   onClick={() =>
                     user?.role === "admin"
@@ -200,6 +200,7 @@ const Products = () => {
               actionPosition="right"
               actionIcon={
                 <IconButton
+                  sx={{ color: "#496DDB" }}
                   aria-label={`info about ${item.title}`}
                   onClick={() =>
                     user?.role === "admin"
